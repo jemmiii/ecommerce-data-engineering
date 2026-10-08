@@ -1,0 +1,9 @@
+check,status,value,details
+Record count,PASS,1007914,Clean sales dataset contains records.
+Duplicate rows,PASS,0,Clean dataset should not contain exact duplicates.
+Missing invoice,PASS,0,Every sales record should have an invoice.
+Missing stock code,PASS,0,Every sales record should have a product code.
+Invalid quantity,PASS,0,Clean sales data should contain only positive quantities.
+Invalid price,PASS,0,Clean sales data should contain positive prices.
+Missing invoice date,PASS,0,Every sales record should have an invoice date.
+Revenue calculation,PASS,0,Revenue should equal quantity multiplied by price.
