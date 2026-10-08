@@ -1,81 +1,72 @@
 # E-Commerce Data Engineering Pipeline
 
-An end-to-end data engineering pipeline built using Python, PySpark, Pandas, and Parquet to process and analyze the UCI Online Retail II dataset.
+An end-to-end data engineering pipeline built with **Python, PySpark, Pandas, Parquet, and Pytest** to process and analyze the **UCI Online Retail II** dataset containing more than 1 million retail transaction records.
 
-## Project Overview
+---
 
-This project processes more than 1 million retail transaction records through a structured data engineering workflow.
+## 🚀 Project Overview
 
-The pipeline performs:
+This project demonstrates a complete data engineering workflow from raw data profiling and cleaning to scalable ETL processing, data quality validation, and business analytics.
 
-- Raw data profiling
+### Key Capabilities
+
+- Raw retail data profiling
 - Data cleaning and transformation
-- Returns and cancellation handling
+- Duplicate and invalid transaction handling
+- Returns and cancellation separation
 - Parquet-based data storage
-- PySpark ETL processing
-- Data quality validation
+- PySpark ETL and aggregations
+- Automated data quality validation
 - Customer-level analytics
 - Monthly business analytics
 - Product and country-level analysis
-- Automated pipeline tests
-- Airflow DAG definition for pipeline orchestration
+- Automated unit tests
+- Apache Airflow DAG definition
 
-## Architecture
+---
 
-```text
-UCI Online Retail II Dataset
-            |
-            v
-      Raw Excel Data
-            |
-            v
-      Data Profiling
-            |
-            v
-    Data Cleaning Layer
-            |
-      +-----+-----+
-      |           |
-      v           v
-Clean Sales   Returns Data
-      |
-      v
- Parquet Data Layer
-      |
-      v
-    PySpark ETL
-      |
- +----+---------+---------+
- |              |         |
- v              v         v
-Monthly       Country   Product
-Sales         Sales     Sales
-      |
-      v
-Data Quality Checks
-      |
-      v
-Business Analytics
-      |
- +----+---------+---------+
- |              |         |
- v              v         v
-Customer      Monthly   Returns
-Metrics       Metrics   Metrics
+## 🏗️ Architecture
 
-Dataset
+```mermaid
+flowchart TD
+    A[UCI Online Retail II Dataset] --> B[Raw Excel Data]
+    B --> C[Data Profiling]
+    C --> D[Data Cleaning & Transformation]
+
+    D --> E[Clean Sales Data]
+    D --> F[Returns & Cancellations]
+
+    E --> G[Parquet Data Layer]
+    G --> H[PySpark ETL]
+
+    H --> I[Monthly Sales]
+    H --> J[Country Sales]
+    H --> K[Product Sales]
+
+    G --> L[Data Quality Validation]
+
+    E --> M[Business Analytics]
+    F --> M
+
+    M --> N[Customer Metrics]
+    M --> O[Monthly Metrics]
+    M --> P[Return Metrics]
+📊 Dataset
 The project uses the UCI Online Retail II dataset.
-The dataset contains online retail transaction records with information such as:
-- Invoice
-- Stock Code
-- Product Description
-- Quantity
-- Invoice Date
-- Price
-- Customer ID
-- Country
-The raw dataset contains more than 1 million transaction records across two time periods.
-Data Processing
+The dataset contains online retail transaction information including:
+Column	Description
+Invoice	Invoice/transaction identifier
+StockCode	Product identifier
+Description	Product description
+Quantity	Number of units purchased
+InvoiceDate	Transaction date and time
+Price	Unit price
+Customer ID	Customer identifier
+Country	Customer country
+
+
+The dataset contains transaction records covering 2009–2011.
+🔄 Data Pipeline
 1. Data Profiling
 The raw dataset is profiled before transformation to identify:
 - Missing values
@@ -86,9 +77,9 @@ The raw dataset is profiled before transformation to identify:
 - Unique products
 - Unique customers
 - Country distribution
-- Date range
+- Transaction date range
 2. Data Cleaning
-The cleaning pipeline:
+The cleaning pipeline performs the following operations:
 - Combines both dataset sheets
 - Removes exact duplicate records
 - Separates return/cancellation transactions
@@ -97,16 +88,20 @@ The cleaning pipeline:
 - Calculates transaction revenue
 - Adds year, month, day, and weekday attributes
 - Stores cleaned data in Parquet format
-The resulting clean sales dataset contains:
-1,007,914 valid sales records
-A separate dataset containing 22,496 return/cancellation records is also maintained for analysis.
+Cleaned Dataset
+Metric	Result
+Clean sales records	1,007,914
+Return/cancellation records	22,496
+Total revenue	£20.48M
+
+
 3. PySpark ETL
-PySpark is used to process and aggregate the cleaned transaction data.
+PySpark is used to process and aggregate the cleaned transaction dataset.
 The ETL pipeline generates:
 - Monthly sales
 - Country-level sales
 - Product-level sales
-The aggregated outputs are stored in Parquet format.
+The aggregated results are stored as Parquet files.
 4. Data Quality Validation
 Automated data quality checks validate:
 - Record count
@@ -117,10 +112,10 @@ Automated data quality checks validate:
 - Invalid prices
 - Missing invoice dates
 - Revenue calculation consistency
-Current validation result:
-8/8 data quality checks passed
+Validation Result
+8 / 8 data quality checks passed ✅
 5. Business Analytics
-The analytics layer generates:
+The analytics layer generates customer, monthly, and return-related metrics.
 Customer Metrics
 - Total revenue
 - Total orders
@@ -139,36 +134,51 @@ Return Metrics
 - Return transactions
 - Returned items
 - Return value
-Key Results
-The pipeline successfully processed:
-- 1,007,914 clean sales records
-- 22,496 return/cancellation records
-- 8/8 data quality checks passed
-- 5/5 automated tests passed
-The pipeline produces analytical outputs for:
+📈 Key Results
+The completed pipeline successfully produced:
+Result	Value
+Clean sales records	1,007,914
+Return/cancellation records	22,496
+Data quality checks	8 / 8 passed
+Automated tests	5 / 5 passed
+Clean sales dataset	Parquet
+Analytics outputs	Parquet
+
+
+The pipeline provides analytical outputs for:
 - Monthly revenue trends
 - Country performance
 - Product performance
 - Customer revenue
 - Average order value
-- Return/cancellation trends
-Technology Stack
-Programming
-- Python 3.11
-Data Engineering
-- PySpark 3.5.6
-- Pandas 2.2.3
-- PyArrow 18.1.0
-- Parquet
-Data Quality & Testing
-- Pytest
-Orchestration
-- Apache Airflow DAG definition
-Development Tools
-- VS Code
-- Git
-- GitHub
-Project Structure
+- Return and cancellation trends
+🧪 Testing
+The project includes automated tests using Pytest.
+The test suite validates:
+- Data quality checks
+- Customer metric calculations
+- Monthly metric calculations
+- Return metric calculations
+- Empty return-data handling
+Test Result
+5 passed
+
+Run the tests with:
+pytest -v
+
+⚙️ Technology Stack
+Category	Technologies
+Language	Python 3.11
+Data Processing	PySpark 3.5.6
+Data Analysis	Pandas 2.2.3
+Storage	Apache Parquet / PyArrow
+Testing	Pytest
+Orchestration	Apache Airflow DAG
+Development	VS Code
+Version Control	Git / GitHub
+
+
+📁 Project Structure
 ecommerce-data-engineering/
 │
 ├── data/
@@ -199,66 +209,63 @@ ecommerce-data-engineering/
 ├── sql/
 │
 ├── requirements.txt
+├── .gitignore
 └── README.md
 
-Installation
-Clone the repository:
+🛠️ Installation
+Clone the repository
 git clone https://github.com/jemmiii/ecommerce-data-engineering.git
 cd ecommerce-data-engineering
 
-Create a virtual environment:
+Create a virtual environment
 python -m venv venv
 
-Activate the environment on Windows:
+Activate the environment
+Windows
 venv\Scripts\Activate.ps1
 
-Install dependencies:
+Install dependencies
 pip install -r requirements.txt
 
-Running the Pipeline
-Data Profiling
+▶️ Running the Pipeline
+1. Profile raw data
 python src/ingestion/profile_raw_data.py
 
-Data Cleaning
+2. Clean the dataset
 python src/transformation/clean_retail_data.py
 
-PySpark ETL
+3. Run PySpark ETL
 python src/transformation/spark_etl.py
 
-Data Quality Checks
+4. Run data quality checks
 python src/transformation/data_quality.py
 
-Business Analytics
+5. Run business analytics
 python src/analytics/customer_analytics.py
 
-Run Tests
+6. Run automated tests
 pytest -v
 
-Expected result:
-5 passed
-
-Data Outputs
-The pipeline generates processed data under:
+📦 Generated Outputs
+The pipeline generates the following processed datasets:
 data/processed/
+│
+├── retail_sales_clean.parquet
+├── retail_returns.parquet
+├── data_quality_report.csv
+│
+├── spark/
+│   ├── monthly_sales.parquet
+│   ├── country_sales.parquet
+│   └── product_sales.parquet
+│
+└── analytics/
+    ├── customer_metrics.parquet
+    ├── monthly_metrics.parquet
+    └── return_metrics.parquet
 
-Major outputs include:
-retail_sales_clean.parquet
-retail_returns.parquet
-
-spark/
-├── monthly_sales.parquet
-├── country_sales.parquet
-└── product_sales.parquet
-
-analytics/
-├── customer_metrics.parquet
-├── monthly_metrics.parquet
-└── return_metrics.parquet
-
-data_quality_report.csv
-
-Orchestration
-An Apache Airflow DAG is included to define the pipeline task dependencies:
+🔄 Pipeline Orchestration
+An Apache Airflow DAG is included to define the dependency between the major pipeline tasks.
 Clean Data
     ↓
 Spark ETL
@@ -267,10 +274,11 @@ Data Quality Checks
     ↓
 Business Analytics
 
-The current project includes the DAG definition. Production Airflow deployment is a future enhancement.
-Engineering Practices
-This project demonstrates:
+The current repository contains the Airflow DAG definition. A production Airflow deployment is planned as a future enhancement.
+💡 Engineering Practices Demonstrated
+This project demonstrates practical data engineering concepts including:
 - ETL pipeline design
+- Data profiling
 - Data cleaning and transformation
 - Distributed data processing with PySpark
 - Columnar storage using Parquet
@@ -278,13 +286,20 @@ This project demonstrates:
 - Business-oriented analytics
 - Automated testing
 - Pipeline orchestration design
-Future Improvements
-Potential extensions include:
+- Git-based version control
+🔮 Future Improvements
+Potential future enhancements include:
 - AWS S3 data lake integration
-- AWS EMR or AWS Glue
+- AWS EMR or AWS Glue processing
 - Production Airflow deployment
 - Incremental data processing
 - Partitioned Parquet datasets
 - Spark SQL analytics
 - Data warehouse integration
 - Pipeline monitoring and observability
+👨‍💻 Author
+Jemin Patidar
+B.Tech Information Technology
+Manipal University Jaipur
+- GitHub: https://github.com/jemmiii
+- Portfolio: https://jeminpatidar-portfolio.vercel.app/
